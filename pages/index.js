@@ -15,7 +15,7 @@ export default function Home() {
 		console.log("button clicked");
 		// Initialize an agent at application startup.
 		const fpPromise = FingerprintJS.load({
-			token: 'tXDGqdPGX6CGFZ8ofXr1', region: 'eu'
+			token: 'Xcm7EBUjk6vqbzY2GaOu', region: 'us'
 		})
 
 		// Get the visitor identifier when you need it.
