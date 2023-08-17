@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import InnerHTML from 'dangerously-set-html-content'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 import { useState } from 'react'
@@ -9,6 +10,7 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
 
 export default function Home() {
     const [visitorId, setVisitorId] = React.useState("")
+    const [error, setError] = React.useState("")
 
 
     function handleButtonClick() {
@@ -17,7 +19,7 @@ export default function Home() {
         const fpPromise = FingerprintJS.load({
             apiKey: 'Pe5kakv7aTUlgSjFNw5E',
             scriptUrlPattern: [
-                'https://stg.fp.palatable.tech/v3/Pe5kakv7aTUlgSjFNw5E/loader_v3.8.5.js',
+                'https://stg.fp.palatable.tech/procdn/v3/Pe5kakv7aTUlgSjFNw5E/loader_v3.8.5.js',
                 FingerprintJS.defaultScriptUrlPattern, // The default endpoint as fallback
             ],
             endpoint: [
@@ -30,7 +32,18 @@ export default function Home() {
         fpPromise
             .then(fp => fp.get())
             .then(result => console.log(result.visitorId))
+            .catch(error => console.log(error))
     }
+
+    const cdnScript = `
+           <script>
+            const fpPromise = import('https://stg.fp.palatable.tech/procdn/v3/Pe5kakv7aTUlgSjFNw5E')
+            .then(FingerprintJS => FingerprintJS.load({ 
+            endpoint: [ 'https://stg.fp.palatable.tech'] 
+        })); 
+            fpPromise.then(fp => fp.get()).then(result => console.log('CDN version', result.visitorId)).catch(error => console.log(error));
+            </script>
+    `
 
     return (
         <div className="container">
@@ -41,8 +54,10 @@ export default function Home() {
 
         <main>
         <Header title="FingerPrintJS PRO test" />
-        <button onClick={handleButtonClick}>Get Visitor Id</button>
+        <button onClick={handleButtonClick}>Get Visitor Id NPM</button>
         <div>{visitorId}</div>
+        <div>{error}</div>
+        <InnerHTML html={cdnScript} />
         </main>
 
         <Footer />
