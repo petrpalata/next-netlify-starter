@@ -8,36 +8,44 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
 
 
 export default function Home() {
-	const [visitorId, setVisitorId] = React.useState("")
+    const [visitorId, setVisitorId] = React.useState("")
 
 
-	function handleButtonClick() {
-		console.log("button clicked");
-		// Initialize an agent at application startup.
-		const fpPromise = FingerprintJS.load({
-			token: 'Xcm7EBUjk6vqbzY2GaOu', region: 'us'
-		})
+    function handleButtonClick() {
+        console.log("button clicked");
+        // Initialize the agent at application startup.
+        const fpPromise = FingerprintJS.load({
+            apiKey: 'Pe5kakv7aTUlgSjFNw5E',
+            scriptUrlPattern: [
+                'https://stg.fp.palatable.tech/v3/Pe5kakv7aTUlgSjFNw5E/loader_v3.8.5.js',
+                FingerprintJS.defaultScriptUrlPattern, // The default endpoint as fallback
+            ],
+            endpoint: [
+                'https://stg.fp.palatable.tech/',
+                FingerprintJS.defaultEndpoint, // The default endpoint as fallback
+            ]
+        })
 
-		// Get the visitor identifier when you need it.
-		fpPromise
-			.then(fp => fp.get())
-			.then(result => setVisitorId(result.visitorId))
-	}
+        // When you need the visitor identifier:
+        fpPromise
+            .then(fp => fp.get())
+            .then(result => console.log(result.visitorId))
+    }
 
-  return (
-    <div className="container">
-      <Head>
+    return (
+        <div className="container">
+        <Head>
         <title>Next.js Starter!</title>
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+        </Head>
 
-      <main>
+        <main>
         <Header title="FingerPrintJS PRO test" />
-	<button onClick={handleButtonClick}>Get Visitor Id</button>
-	<div>{visitorId}</div>
-      </main>
+        <button onClick={handleButtonClick}>Get Visitor Id</button>
+        <div>{visitorId}</div>
+        </main>
 
-      <Footer />
-    </div>
-  )
+        <Footer />
+        </div>
+    )
 }
