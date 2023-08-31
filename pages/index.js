@@ -19,7 +19,7 @@ export default function Home() {
         const fpPromise = FingerprintJS.load({
             apiKey: 'Pe5kakv7aTUlgSjFNw5E',
             scriptUrlPattern: [
-                'https://stg.fp.palatable.tech/procdn/v3/Pe5kakv7aTUlgSjFNw5E/loader_v3.8.5.js',
+                'https://stg.fp.palatable.tech/web/v3/Pe5kakv7aTUlgSjFNw5E/loader_v3.8.5.js',
                 FingerprintJS.defaultScriptUrlPattern, // The default endpoint as fallback
             ],
             endpoint: [
@@ -37,7 +37,7 @@ export default function Home() {
 
     const cdnScript = `
            <script>
-            const fpPromise = import('https://stg.fp.palatable.tech/procdn/v3/Pe5kakv7aTUlgSjFNw5E')
+            const fpPromise = import('https://stg.fp.palatable.tech/web/v3/Pe5kakv7aTUlgSjFNw5E')
             .then(FingerprintJS => FingerprintJS.load({ 
             endpoint: [ 'https://stg.fp.palatable.tech'] 
         })); 
